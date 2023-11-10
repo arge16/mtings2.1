@@ -45,7 +45,7 @@ public class ExamenesService {
     public EstudianteEntity findStudentByRut(String rut){
         System.out.println("rut: "+rut);
         ResponseEntity<EstudianteEntity> response = restTemplate.exchange(
-                "http://localhost:8080/estudiante/byRut/"+rut,
+                "http://backend-estudiantes-service/estudiante/byRut/"+rut,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<EstudianteEntity>() {}
@@ -55,7 +55,7 @@ public class ExamenesService {
 
     public CuotasEntity saveCuota(CuotasEntity cuota) {
         HttpEntity<CuotasEntity> request = new HttpEntity<CuotasEntity>(cuota);
-        CuotasEntity cuotaNew = restTemplate.postForObject("http://localhost:8080/cuotas", request, CuotasEntity.class);
+        CuotasEntity cuotaNew = restTemplate.postForObject("http://backend-cuotas-service/cuotas", request, CuotasEntity.class);
         return cuotaNew;
     }
 
@@ -169,7 +169,7 @@ public class ExamenesService {
 
     public ArrayList<CuotasEntity> getAllInstallmentsByRut(String rut) {
         ResponseEntity<ArrayList<CuotasEntity>> response = restTemplate.exchange(
-                "http://localhost:8080/cuotas/bystudent/" + rut,
+                "http://backend-cuotas-service/cuotas/bystudent/" + rut,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<ArrayList<CuotasEntity>>() {}

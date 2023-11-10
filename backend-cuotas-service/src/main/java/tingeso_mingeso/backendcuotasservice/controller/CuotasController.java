@@ -9,7 +9,7 @@ import tingeso_mingeso.backendcuotasservice.service.CuotasService;
 import java.util.ArrayList;
 import java.util.Optional;
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/cuotas")
 public class CuotasController {

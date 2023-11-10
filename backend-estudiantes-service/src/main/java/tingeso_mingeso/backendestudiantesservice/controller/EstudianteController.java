@@ -9,7 +9,7 @@ import tingeso_mingeso.backendestudiantesservice.model.CuotasEntity;
 import java.util.ArrayList;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/estudiante")
 public class EstudianteController {

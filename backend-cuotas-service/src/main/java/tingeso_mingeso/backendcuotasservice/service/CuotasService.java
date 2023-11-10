@@ -47,7 +47,7 @@ public class CuotasService {
     public EstudianteEntity findStudentByRut(String rut){
         System.out.println("rut: "+rut);
         ResponseEntity<EstudianteEntity> response = restTemplate.exchange(
-                "http://localhost:8080/estudiante/byRut/"+rut,
+                "http://backend-estudiantes-service/estudiante/byRut/"+rut,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<EstudianteEntity>() {}
@@ -58,7 +58,7 @@ public class CuotasService {
     public EstudianteEntity setPaymentType(String paymentType, String rut){
         System.out.println("rut: "+rut);
         ResponseEntity<EstudianteEntity> response = restTemplate.exchange(
-                "http://localhost:8080/estudiante/paymenttype/"+rut+ "/"+paymentType,
+                "http://backend-estudiantes-service/estudiante/paymenttype/"+rut+ "/"+paymentType,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<EstudianteEntity>() {}
