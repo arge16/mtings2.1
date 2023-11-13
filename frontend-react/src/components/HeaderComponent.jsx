@@ -20,7 +20,6 @@ class HeaderComponent extends Component {
                 <nav>
                 </nav>
                 <a class="btn" href="/"><button>Volver al menú principal</button></a>
-                <a class="btn" onClick={this.addStudent}><button>Ingresar nuevo Estudiante</button></a>
             </header>
             </div>
         )
