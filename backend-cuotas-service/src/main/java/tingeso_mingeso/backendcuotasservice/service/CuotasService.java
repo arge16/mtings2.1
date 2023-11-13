@@ -26,6 +26,31 @@ public class CuotasService {
     @Autowired
     RestTemplate restTemplate;
 
+        // Actualizar una cuota existente
+    public CuotasEntity updateCuota(Long id, CuotasEntity cuota) {
+        Optional<CuotasEntity> cuotaExistente = cuotasRepository.findById(id);
+        if (cuotaExistente.isPresent()) {
+            CuotasEntity cuotaActualizada = cuotaExistente.get();
+
+            // Actualiza los campos de la cuota existente con los valores proporcionados en la cuota recibida
+            cuotaActualizada.setRut(cuota.getRut());
+            cuotaActualizada.setAmount(cuota.getAmount());
+            cuotaActualizada.setDiscount(cuota.getDiscount());
+            cuotaActualizada.setInterest(cuota.getInterest());
+            cuotaActualizada.setTotal(cuota.getTotal());
+            cuotaActualizada.setStatus(cuota.getStatus());
+            cuotaActualizada.setDue_date(cuota.getDue_date());
+            cuotaActualizada.setPayment_date(cuota.getPayment_date());
+
+            // Guarda la cuota actualizada en la base de datos
+            cuotasRepository.save(cuotaActualizada);
+
+            return cuotaActualizada;
+        } else {
+            return null; // Opcionalmente, podrías lanzar una excepción aquí si lo prefieres
+        }
+    }
+
     public CuotasEntity saveInstallment(CuotasEntity installment){
         return cuotasRepository.save(installment);
     }
@@ -116,7 +141,8 @@ public class CuotasService {
             double discountbygraduationyear = administracionService.discountByGraduationYear(student.getGraduation_year());
             double discountbyschooltype = administracionService.discountBySchoolType(student.getSchool_type());
             double totalamount =  1500000 - ((discountbygraduationyear + discountbyschooltype) * 1500000) +70000;
-            double installmentAmount = totalamount / cantidadCuotas;
+            double cuotaamount =  1500000 - ((discountbygraduationyear + discountbyschooltype) * 1500000);
+            double installmentAmount = cuotaamount / cantidadCuotas;
             int roundedInstallmentAmount = (int) Math.ceil(installmentAmount); // Redondear al entero mayor
             CuotasEntity matricula = new CuotasEntity();
             matricula.setDue_date(date);

@@ -49,11 +49,11 @@ class GenerateInstallmentsComponent extends Component {
                     <input
                         type="number"
                         id="cantidadCuotas"
-                        name="numberOfInstallments"
+                        name="limit"
                         min="2"
                         max={this.state.limit}
                         required
-                        value={this.state.numberOfInstallments}
+                        value={this.state.limit}
                         onChange={this.handleInputChange}
                     />
                     <input type="submit" value="Generar Cuotas" />

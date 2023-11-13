@@ -22,9 +22,11 @@ class ViewInstallmentsComponent extends Component {
             });
     }
 
-    componentDidMount(){
-        InstallmentService.getInstallments(this.state.rut).then((res) => {
-            this.setState({ installments: res.data});
+    componentDidMount() {
+        InstallmentService.getInstallments(this.state.rut).then(res => {
+            // Ordenar las cuotas por fecha antes de actualizar el estado
+            const sortedInstallments = res.data.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+            this.setState({ installments: sortedInstallments });
         });
     }
 

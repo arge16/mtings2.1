@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CuotasEntity {
 
-
+    Long id;
     private String rut;
     private int amount;
     private double discount;

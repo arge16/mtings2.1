@@ -18,8 +18,16 @@ public class CuotasController {
     @Autowired
     AdministracionService administracionService;
 
-
-
+    @PutMapping("/{id}")
+    public ResponseEntity<CuotasEntity> updateCuota(@PathVariable Long id, @RequestBody CuotasEntity cuota) {
+        CuotasEntity cuotaActualizada = cuotasService.updateCuota(id, cuota);
+        if (cuotaActualizada != null) {
+            return new ResponseEntity<>(cuotaActualizada, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    
     @PostMapping()
     public ResponseEntity<CuotasEntity> save(@RequestBody CuotasEntity cuota) {
         CuotasEntity cuotaNew = cuotasService.saveInstallment(cuota);
@@ -51,11 +59,6 @@ public class CuotasController {
             }
         }
     */
-    @PutMapping()
-    public ResponseEntity<CuotasEntity> update(@RequestBody CuotasEntity cuota) {
-        CuotasEntity cuotaNew = cuotasService.saveInstallment(cuota);
-        return ResponseEntity.ok(cuotaNew);
-    }
 
     @GetMapping("/generar-contado/{rut}")
     public ResponseEntity<ArrayList<CuotasEntity>>  generarCuotasContado(@PathVariable("rut") String rut) {

@@ -59,6 +59,23 @@ public class ExamenesService {
         return cuotaNew;
     }
 
+        public CuotasEntity updateCuota(CuotasEntity cuota) {
+        // Configura la entidad de la solicitud con la cuota actualizada
+        HttpEntity<CuotasEntity> request = new HttpEntity<>(cuota);
+
+        // Realiza la solicitud HTTP PUT
+        ResponseEntity<CuotasEntity> response = restTemplate.exchange(
+                "http://backend-cuotas-service/cuotas/{id}",  // URL con un marcador de posición para el ID de la cuota
+                HttpMethod.PUT,  // Método HTTP PUT
+                request,
+                CuotasEntity.class,
+                cuota.getId()  // Pasa el ID de la cuota como argumento al marcador de posición
+        );
+
+        // Retorna la cuota actualizada
+        return response.getBody();
+    }
+
     public double discountByExam(int examGrade) {
         double discountToApply = 0;
         if ((examGrade >= 950) && (examGrade <= 1000)) {
@@ -162,7 +179,7 @@ public class ExamenesService {
             if (installment1.getAmount()!=70000 && installment1.getStatus().equals("Unpaid")){
                 installment1.setInterest(interest);
                 installment1.setAmount((int) (installment1.getAmount() * (1 + interest)));
-                saveCuota(installment1);
+                updateCuota(installment1);
             }
         }
     }
@@ -207,10 +224,10 @@ public class ExamenesService {
                 double discountByExam = discountByExam(scoreAverage);
                 double totalDiscount = installment.getDiscount() + discountByExam;
                 totalDiscount = Math.round(totalDiscount * 100.0) / 100.0;
-                double installmentAmount = (installment.getAmount() * discountByExam) + installment.getAmount();
+                double installmentAmount =  installment.getAmount() - (installment.getAmount() * discountByExam);
                 installment.setDiscount(totalDiscount);
                 installment.setAmount( (int) Math.ceil(installmentAmount));
-                saveCuota(installment);
+                updateCuota(installment);
             }
         }
         setInterestRate(installments);
@@ -253,7 +270,7 @@ public class ExamenesService {
         student.setTotalDebt(total);
         student.setTotalExams(exams.size());
         student.setScoresAverage(scoreAverage/exams.size());
-        student.setInstallmentsPaid(installmentsPaid);
+        student.setInstallmentsPaid(installmentsPaid-1);
         student.setDebtPaid(debtPaid);
         if(lastPayment != LocalDate.MIN){
             student.setLastPayment(lastPayment);
